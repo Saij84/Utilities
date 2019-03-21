@@ -6,11 +6,11 @@ from random import randint
 
 
 # generate an array random or otherwise
-def array_generator(start, end, isRandom=True, isRandomRange=False):
+def array_generator(start, end, arr_size=10, isRandom=True, isRandomRange=False):
     if isRandom == True:
         if isRandomRange == True:
             end = randint(1, end)
-        return [randint(start, end) for i in range(start, end+1)]
+        return [randint(start, end) for i in range(arr_size)]
     else:
         return [i for i in range(start, end)]
 

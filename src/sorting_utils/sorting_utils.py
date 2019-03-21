@@ -1,6 +1,7 @@
 """
 sorting utilities
 """
+from utils.src.array_utils import array_utils as aUtils
 
 # merge sorting, first part: divide the given array to its smallest parts
 # then use the a merge function to put the array back together in ascending order
@@ -43,3 +44,37 @@ def merge(left, right):
             result.append(right[0])
             right = right[1:]
     return result
+
+
+def partition(arr, l_idx, r_idx):
+    x = arr[l_idx]
+    j = l_idx
+
+    for i in range(l_idx+1, r_idx):
+        if arr[i] <= x:
+            j += 1
+
+            arr[j], arr[i] = arr[i], arr[j]
+    arr[l_idx], arr[j] = arr[j], arr[l_idx]
+    return j
+
+
+def quick_sort(arr):
+    l_idx, r_idx = 0, len(arr)
+
+    if l_idx >= r_idx:
+        return
+
+    m = partition(arr, l_idx, r_idx)
+
+    quick_sort(arr[:m-1])
+    quick_sort(arr[m+1:])
+
+    return arr
+
+x=9
+
+for i in range(1):
+    data_in = aUtils.array_generator(1, 100, arr_size=x, isRandomRange=False)
+    print(data_in)
+    print(quick_sort(data_in))
