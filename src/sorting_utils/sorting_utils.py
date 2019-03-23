@@ -74,16 +74,3 @@ def partition(arr, l_idx, r_idx):
     arr[l_idx], arr[p_idx] = arr[p_idx], arr[l_idx]  # move pivot item to correct index
 
     return p_idx
-
-
-x=100
-
-for i in range(5):
-    data_in = aUtils.array_generator(1, 100, arr_size=x, isRandomRange=True)
-    print(" orig sorted:", data_in)
-    result = quick_sort(data_in, 0, len(data_in))
-
-    for i in result:
-        if not int(i) <= result[-1]:
-            print("array has not been sorted correctly {} < {}".format(i, result[-1]))
-    print("array sorted:", result)
