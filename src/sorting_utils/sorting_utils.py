@@ -49,6 +49,7 @@ def merge(left, right):
 def partition(arr, l_idx, r_idx):
     x = arr[l_idx]
     j = l_idx
+    print("arr:", arr)
 
     for i in range(l_idx+1, r_idx):
         if arr[i] <= x:
@@ -56,6 +57,7 @@ def partition(arr, l_idx, r_idx):
 
             arr[j], arr[i] = arr[i], arr[j]
     arr[l_idx], arr[j] = arr[j], arr[l_idx]
+    print("j:", j, arr)
     return j
 
 
@@ -63,16 +65,18 @@ def quick_sort(arr):
     l_idx, r_idx = 0, len(arr)
 
     if l_idx >= r_idx:
-        return
+        return arr
 
     m = partition(arr, l_idx, r_idx)
+    print("arr[:m-1]", arr[:m], "---", "arr[m+1:]", arr[m+1:] )
 
     quick_sort(arr[:m-1])
     quick_sort(arr[m+1:])
 
     return arr
 
-x=9
+
+x=8
 
 for i in range(1):
     data_in = aUtils.array_generator(1, 100, arr_size=x, isRandomRange=False)
