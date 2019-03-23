@@ -4,6 +4,7 @@ sorting utilities
 from utils.src.array_utils import array_utils as aUtils
 
 # merge sorting, first part: divide the given array to its smallest parts
+# merge sorting is an recursive sort meaning it will take more memory depending on the size of the array
 # then use the a merge function to put the array back together in ascending order
 def merge_sort(arr):
     array_len = len(arr)
@@ -25,7 +26,7 @@ def merge_sort(arr):
     return result
 
 
-# merging function
+# merge sort, merging function
 def merge(left, right):
     result = []
 
@@ -46,39 +47,43 @@ def merge(left, right):
     return result
 
 
-def partition(arr, l_idx, r_idx):
-    x = arr[l_idx]
-    j = l_idx
-    print("arr:", arr)
-
-    for i in range(l_idx+1, r_idx):
-        if arr[i] <= x:
-            j += 1
-
-            arr[j], arr[i] = arr[i], arr[j]
-    arr[l_idx], arr[j] = arr[j], arr[l_idx]
-    print("j:", j, arr)
-    return j
-
-
-def quick_sort(arr):
-    l_idx, r_idx = 0, len(arr)
-
+# quick sort, sort items according to an pivot item that satisfies condition: l <= pivot < r
+# and recursively sort "left"/"right" side of the pivot
+# quick sort is and in-place sorting algorithm(memory efficient)
+def quick_sort(arr, l_idx, r_idx):
     if l_idx >= r_idx:
         return arr
 
     m = partition(arr, l_idx, r_idx)
-    print("arr[:m-1]", arr[:m], "---", "arr[m+1:]", arr[m+1:] )
 
-    quick_sort(arr[:m-1])
-    quick_sort(arr[m+1:])
+    quick_sort(arr, l_idx, m)  # sort "left" side of pivot
+    quick_sort(arr, m+1, r_idx)  # sort "right" side of the pivot
 
     return arr
 
 
-x=8
+# quick sort sub-process sorting the array(in place)
+def partition(arr, l_idx, r_idx):
+    pivot = arr[l_idx]  # set pivot item, always set to l_idx
+    p_idx = l_idx  # pivot item idx count
 
-for i in range(1):
-    data_in = aUtils.array_generator(1, 100, arr_size=x, isRandomRange=False)
-    print(data_in)
-    print(quick_sort(data_in))
+    for idx in range(l_idx+1, r_idx):  # iterate through the indexes
+        if arr[idx] <= pivot:
+            p_idx += 1
+            arr[p_idx], arr[idx] = arr[idx], arr[p_idx]  # in place switching
+    arr[l_idx], arr[p_idx] = arr[p_idx], arr[l_idx]  # move pivot item to correct index
+
+    return p_idx
+
+
+x=100
+
+for i in range(5):
+    data_in = aUtils.array_generator(1, 100, arr_size=x, isRandomRange=True)
+    print(" orig sorted:", data_in)
+    result = quick_sort(data_in, 0, len(data_in))
+
+    for i in result:
+        if not int(i) <= result[-1]:
+            print("array has not been sorted correctly {} < {}".format(i, result[-1]))
+    print("array sorted:", result)
