@@ -1,22 +1,29 @@
 """
 sorting utilities
 """
-from utils.src.array_utils import array_utils as aUtils
+from random import random
 
-# merge sorting, first part: divide the given array to its smallest parts
-# then use the a merge function to put the array back together in ascending order
+
 def merge_sort(arr):
+    """
+    Merge sorting, first part: divide the given array to its smallest parts
+    then use the a merge function to put the array back together in ascending order
+
+    :param arr: array
+    :return: sorted array
+    """
+
     array_len = len(arr)
     if array_len <= 1:
         return arr
 
     left, right, result = [], [], []
 
-    for i in range(array_len):
-        if i < array_len//2:  # if value i is smaller than the dividing point
-            left.append(arr[i])
+    for idx in range(array_len):
+        if idx < array_len//2:  # if value i is smaller than the dividing point
+            left.append(arr[idx])
         else:
-            right.append(arr[i])
+            right.append(arr[idx])
 
     left = merge_sort(left)
     right = merge_sort(right)
@@ -25,8 +32,14 @@ def merge_sort(arr):
     return result
 
 
-# merging function
 def merge(left, right):
+    """
+    Merging function for merge sort
+
+    :param left: array
+    :param right: array
+    :return: sorted array
+    """
     result = []
 
     while len(left) > 0 or len(right) > 0:
@@ -43,42 +56,56 @@ def merge(left, right):
         elif len(right) > 0: # catch right leftovers
             result.append(right[0])
             right = right[1:]
+
     return result
 
 
 def partition(arr, l_idx, r_idx):
-    x = arr[l_idx]
-    j = l_idx
-    print("arr:", arr)
+    """
+    Partition function for random quick sort to sort the incoming sub arrays
 
-    for i in range(l_idx+1, r_idx):
-        if arr[i] <= x:
-            j += 1
+    :param arr: array
+    :param l_idx: start of array
+    :param r_idx: end of array
+    :return: sorted array
+    """
 
-            arr[j], arr[i] = arr[i], arr[j]
-    arr[l_idx], arr[j] = arr[j], arr[l_idx]
-    print("j:", j, arr)
-    return j
+    pivot, l_idx, r_idx = arr[l_idx], l_idx, r_idx
+    idx = l_idx
+
+    while idx <= r_idx:
+        if arr[idx] < pivot:
+            arr[l_idx], arr[idx] = arr[idx], arr[l_idx]
+            l_idx += 1
+
+        elif arr[idx] > pivot:
+            arr[r_idx], arr[idx] = arr[idx], arr[r_idx]
+            r_idx -= 1
+            idx -= 1
+        idx += 1
+
+    return l_idx, r_idx
 
 
-def quick_sort(arr):
-    l_idx, r_idx = 0, len(arr)
+def randomized_quick_sort(arr, l_idx, r_idx):
+    """
+    Main of randomized quicksort
+
+    :param arr: array
+    :param l_idx: int, start of array
+    :param r_idx: int, end of array
+    :return: sorted array
+    """
 
     if l_idx >= r_idx:
-        return arr
+        return
 
-    m = partition(arr, l_idx, r_idx)
-    print("arr[:m-1]", arr[:m], "---", "arr[m+1:]", arr[m+1:] )
+    r_num = random.randint(l_idx, r_idx)
+    arr[l_idx], arr[r_num] = arr[r_num], arr[l_idx]
 
-    quick_sort(arr[:m-1])
-    quick_sort(arr[m+1:])
+    m1, m2 = partition(arr, l_idx, r_idx)
+
+    randomized_quick_sort(arr, l_idx, m1)
+    randomized_quick_sort(arr, m2 + 1, r_idx)
 
     return arr
-
-
-x=8
-
-for i in range(1):
-    data_in = aUtils.array_generator(1, 100, arr_size=x, isRandomRange=False)
-    print(data_in)
-    print(quick_sort(data_in))

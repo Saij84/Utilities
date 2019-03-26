@@ -5,6 +5,11 @@ import time
 
 # return time in milliseconds
 def function_timer(function):
+    """
+
+    :param function: functions9
+    :return:
+    """
     def wrap(*args):
         start_time = time.time()
         func = function(*args)
