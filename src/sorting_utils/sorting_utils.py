@@ -4,12 +4,6 @@ sorting utilities
 from random import random
 
 
-<<<<<<< HEAD
-=======
-# merge sorting, first part: divide the given array to its smallest parts
-# merge sorting is an recursive sort meaning it will take more memory depending on the size of the array
-# then use the a merge function to put the array back together in ascending order
->>>>>>> 221267a7444136413eba6fdd47ee952f8e84d9da
 def merge_sort(arr):
     """
     Merge sorting, first part: divide the given array to its smallest parts
@@ -38,10 +32,6 @@ def merge_sort(arr):
     return result
 
 
-<<<<<<< HEAD
-=======
-# merge sort, merging function
->>>>>>> 221267a7444136413eba6fdd47ee952f8e84d9da
 def merge(left, right):
     """
     Merging function for merge sort
@@ -70,7 +60,6 @@ def merge(left, right):
     return result
 
 
-<<<<<<< HEAD
 def partition(arr, l_idx, r_idx):
     """
     Partition function for random quick sort to sort the incoming sub arrays
@@ -101,19 +90,6 @@ def partition(arr, l_idx, r_idx):
 def randomized_quick_sort(arr, l_idx, r_idx):
     """
     Main of randomized quicksort
-=======
-# quick sort, sort items according to an pivot item that satisfies condition: l <= pivot < r
-# and recursively sort "left"/"right" side of the pivot
-# quick sort is and in-place sorting algorithm(memory efficient)
-def quick_sort(arr, l_idx, r_idx):
-    if l_idx >= r_idx:
-        return arr
-
-    m = partition(arr, l_idx, r_idx)
-
-    quick_sort(arr, l_idx, m)  # sort "left" side of pivot
-    quick_sort(arr, m+1, r_idx)  # sort "right" side of the pivot
->>>>>>> 221267a7444136413eba6fdd47ee952f8e84d9da
 
     :param arr: array
     :param l_idx: int, start of array
@@ -129,22 +105,7 @@ def quick_sort(arr, l_idx, r_idx):
 
     m1, m2 = partition(arr, l_idx, r_idx)
 
-<<<<<<< HEAD
     randomized_quick_sort(arr, l_idx, m1)
     randomized_quick_sort(arr, m2 + 1, r_idx)
 
     return arr
-=======
-# quick sort sub-process sorting the array(in place)
-def partition(arr, l_idx, r_idx):
-    pivot = arr[l_idx]  # set pivot item, always set to l_idx
-    p_idx = l_idx  # pivot item idx count
-
-    for idx in range(l_idx+1, r_idx):  # iterate through the indexes
-        if arr[idx] <= pivot:
-            p_idx += 1
-            arr[p_idx], arr[idx] = arr[idx], arr[p_idx]  # in place switching
-    arr[l_idx], arr[p_idx] = arr[p_idx], arr[l_idx]  # move pivot item to correct index
-
-    return p_idx
->>>>>>> 221267a7444136413eba6fdd47ee952f8e84d9da
