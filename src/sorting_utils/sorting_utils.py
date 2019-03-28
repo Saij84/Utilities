@@ -2,6 +2,7 @@
 sorting utilities
 """
 from random import random
+from utils.src.array_utils import array_utils as aUtils
 
 
 def merge_sort(arr):
@@ -13,20 +14,12 @@ def merge_sort(arr):
     :return: sorted array
     """
 
-    array_len = len(arr)
+    array_len = len(arr)  # base case, divide the array until sub arrays reach 1
     if array_len <= 1:
         return arr
+    left = merge_sort(arr[:(len(arr)//2)])
+    right = merge_sort(arr[(len(arr)//2):])
 
-    left, right, result = [], [], []
-
-    for idx in range(array_len):
-        if idx < array_len//2:  # if value i is smaller than the dividing point
-            left.append(arr[idx])
-        else:
-            right.append(arr[idx])
-
-    left = merge_sort(left)
-    right = merge_sort(right)
     result = merge(left, right)
 
     return result
@@ -41,6 +34,7 @@ def merge(left, right):
     :return: sorted array
     """
     result = []
+    count = 0
 
     while len(left) > 0 or len(right) > 0:
         if len(left) > 0 and len(right) > 0:  # run when there are items in both lef and right arrays
@@ -50,10 +44,11 @@ def merge(left, right):
             else:
                 result.append(right[0])
                 right = right[1:]
+                count += 1
         elif len(left) > 0:  # catch left leftovers
             result.append(left[0])
             left = left[1:]
-        elif len(right) > 0: # catch right leftovers
+        elif len(right) > 0:  # catch right leftovers
             result.append(right[0])
             right = right[1:]
 
