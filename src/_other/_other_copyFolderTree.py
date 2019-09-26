@@ -1,23 +1,35 @@
 import os
 
-srcPath = "D:\\Backup\\"
-outPath = "C:\\test\\"
+class CopyFolderTree:
+    def __init__(self, srcPath, outPath):
+        self.srcPath = srcPath
+        self.outPath = outPath
 
-def resolve():
-    assert os.path.exists(srcPath), "source path does not exsits"
-    if not os.path.exists(outPath):
-        os.makedirs(outPath)
+    def resolve(self):
+        assert os.path.exists(self.srcPath), "source path does not exists"
 
-resolve()
+    def makeTree(self):
+        self.resolve()
+        for filePath, folders, files in os.walk(self.srcPath):
+            destPath = filePath.replace(self.srcPath, self.outPath)
+            if not os.path.exists(destPath):
+                os.makedirs(destPath)
+                for file in files:
+                    open("\\".join([destPath, file]), "w")
+            else:
+                for file in files:
+                    open("\\".join([destPath, file]), "w")
+        print("Folders/Files Created!")
 
-def makeTree(path):
-    for filePath, folders, files in os.walk(path):
-        destPath = filePath.replace(path, outPath)
-        if not os.path.exists(destPath):
-            os.makedirs(destPath)
+    def testTree(self):
+        for filePath, folders, files in os.walk(self.srcPath):
+            compairPath = filePath.replace(self.outPath, self.srcPath)
+            assert os.path.exists(compairPath), "{} does not exist".format(compairPath)
             for file in files:
-                print("---->", "\\".join([destPath, file]), "w")
-                open("\\".join([destPath, file]), "w")
+                checkFilePath = "\\".join([compairPath, file])
+                assert os.path.isfile(checkFilePath), "{} does not exist".format(checkFilePath)
+        print("Folder StructureTest OK!")
 
-def testTree(srcPath, trgPath):
-    os.walk(sr)
+ctp = CopyFolderTree("Z:\\", "C:\\NASTree\\")
+ctp.makeTree()
+ctp.testTree()
