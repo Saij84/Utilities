@@ -1,23 +1,23 @@
 import os
 
-srcPath = "D:\Backup"
-outPath = "C:\Test"
+srcPath = "D:\\Backup\\"
+outPath = "C:\\test\\"
 
 def resolve():
     assert os.path.exists(srcPath), "source path does not exsits"
-
     if not os.path.exists(outPath):
         os.makedirs(outPath)
 
 resolve()
-for path, folders, files in os.walk(srcPath):
-    destPath = path.replace(srcPath, outPath)
-    for folder in folders:
-        subPath = "\\".join([destPath, folder])
-        if not os.path.exists(subPath):
-            os.makedirs(subPath)
 
-        if files:
+def makeTree(path):
+    for filePath, folders, files in os.walk(path):
+        destPath = filePath.replace(path, outPath)
+        if not os.path.exists(destPath):
+            os.makedirs(destPath)
             for file in files:
-                open("\\".join([subPath, file]), "w")
+                print("---->", "\\".join([destPath, file]), "w")
+                open("\\".join([destPath, file]), "w")
 
+def testTree(srcPath, trgPath):
+    os.walk(sr)
